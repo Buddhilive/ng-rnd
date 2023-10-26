@@ -2,5 +2,134 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "d3js": {
+      "root": "projects/d3js/",
+      "sourceRoot": "projects/d3js/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/d3js",
+            "index": "projects/d3js/src/index.html",
+            "main": "projects/d3js/src/main.ts",
+            "polyfills": "projects/d3js/src/polyfills.ts",
+            "tsConfig": "projects/d3js/tsconfig.app.json",
+            "assets": [
+              "projects/d3js/src/favicon.ico",
+              "projects/d3js/src/assets"
+            ],
+            "styles": [
+              "projects/d3js/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/d3js/src/environments/environment.ts",
+                  "with": "projects/d3js/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "d3js:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "d3js:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "d3js:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/d3js/src/test.ts",
+            "polyfills": "projects/d3js/src/polyfills.ts",
+            "tsConfig": "projects/d3js/tsconfig.spec.json",
+            "karmaConfig": "projects/d3js/karma.conf.js",
+            "styles": [
+              "projects/d3js/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/d3js/src/favicon.ico",
+              "projects/d3js/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/d3js/tsconfig.app.json",
+              "projects/d3js/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "d3js-e2e": {
+      "root": "projects/d3js-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/d3js-e2e/protractor.conf.js",
+            "devServerTarget": "d3js:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "d3js:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/d3js-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "d3js"
 }
