@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MultiEntryComponent } from './multi-entry.component';
+import { CompBComponent } from './comp-b.component';
 
-describe('MultiEntryComponent', () => {
-  let component: MultiEntryComponent;
-  let fixture: ComponentFixture<MultiEntryComponent>;
+describe('CompBComponent', () => {
+  let component: CompBComponent;
+  let fixture: ComponentFixture<CompBComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MultiEntryComponent ]
+      declarations: [ CompBComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MultiEntryComponent);
+    fixture = TestBed.createComponent(CompBComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
