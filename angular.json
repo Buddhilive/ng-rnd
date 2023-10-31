@@ -129,6 +129,41 @@
           }
         }
       }
+    },
+    "multi-entry": {
+      "root": "projects/multi-entry",
+      "sourceRoot": "projects/multi-entry/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/multi-entry/tsconfig.lib.json",
+            "project": "projects/multi-entry/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/multi-entry/src/test.ts",
+            "tsConfig": "projects/multi-entry/tsconfig.spec.json",
+            "karmaConfig": "projects/multi-entry/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/multi-entry/tsconfig.lib.json",
+              "projects/multi-entry/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "d3js"

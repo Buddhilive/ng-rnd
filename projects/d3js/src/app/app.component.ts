@@ -21,7 +21,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.createSvg();
-    this.drawBars(this.data);
+    // this.drawBars(this.data);
   }
 
   private createSvg(): void {
@@ -30,6 +30,7 @@ export class AppComponent {
       .append("svg")
       .attr("width", this.width + this.margin * 2)
       .attr("height", this.height + this.margin * 2)
+      .attr("fill", "rgb(243,244,246)")
       .append("g")
       .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
   }

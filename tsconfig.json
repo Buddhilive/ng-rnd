@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "multi-entry": [
+        "dist/multi-entry"
+      ],
+      "multi-entry/*": [
+        "dist/multi-entry/*"
+      ]
+    }
   }
 }
