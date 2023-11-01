@@ -21,7 +21,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.createSvg();
-    // this.drawBars(this.data);
+    this.drawBars(this.data);
   }
 
   private createSvg(): void {

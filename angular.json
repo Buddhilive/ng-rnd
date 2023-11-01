@@ -164,6 +164,133 @@
           }
         }
       }
+    },
+    "table": {
+      "root": "projects/table/",
+      "sourceRoot": "projects/table/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/table",
+            "index": "projects/table/src/index.html",
+            "main": "projects/table/src/main.ts",
+            "polyfills": "projects/table/src/polyfills.ts",
+            "tsConfig": "projects/table/tsconfig.app.json",
+            "assets": [
+              "projects/table/src/favicon.ico",
+              "projects/table/src/assets"
+            ],
+            "styles": [
+              "projects/table/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/table/src/environments/environment.ts",
+                  "with": "projects/table/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "table:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "table:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "table:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/table/src/test.ts",
+            "polyfills": "projects/table/src/polyfills.ts",
+            "tsConfig": "projects/table/tsconfig.spec.json",
+            "karmaConfig": "projects/table/karma.conf.js",
+            "styles": [
+              "projects/table/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/table/src/favicon.ico",
+              "projects/table/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/table/tsconfig.app.json",
+              "projects/table/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "table-e2e": {
+      "root": "projects/table-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/table-e2e/protractor.conf.js",
+            "devServerTarget": "table:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "table:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/table-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "d3js"

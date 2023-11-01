@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start:d3js": "ng serve --project=d3js --port=6006",
+    "start:table": "ng serve --project=table --port=6006",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

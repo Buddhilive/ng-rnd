@@ -1,0 +1,30 @@
+<table>
+  <tbody>
+    <tr *ngFor="let row of gridData; index as rowIndex">
+      <td *ngFor="let cell of row; index as cellIndex">
+        <!-- <input
+          type="checkbox"
+          name="{{ rowIndex }}-{{ cellIndex }}"
+          id="ch-{{ rowIndex }}-{{ cellIndex }}"
+          [attr.data-row]="rowIndex"
+          [attr.data-cell]="cellIndex"
+          (change)="getRow($event)"
+        /> -->
+        <label>{{ rowIndex }} - {{ cellIndex }}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <div *ngFor="let row of gridData; index as rowIndex">
+  <div *ngFor="let cell of row; index as cellIndex">
+    <input
+      type="checkbox"
+      name="{{ rowIndex }}-{{ cellIndex }}"
+      id="ch-{{ rowIndex }}-{{ cellIndex }}"
+      [attr.data-row]="rowIndex"
+      [attr.data-cell]="cellIndex"
+      (change)="getRow($event)"
+    />
+    <label>{{ cell }} / {{ rowIndex }} - {{ cellIndex }}</label>
+  </div>
+</div> -->
