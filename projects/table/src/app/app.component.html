@@ -1,30 +1,42 @@
-<table>
-  <tbody>
-    <tr *ngFor="let row of gridData; index as rowIndex">
-      <td *ngFor="let cell of row; index as cellIndex">
-        <!-- <input
-          type="checkbox"
+<div class="fb-dynamicgrid">
+  <table class="fb-dynamicgrid__table" #fbDynamicGrid>
+    <tr
+      *ngFor="let row of gridData; index as rowIndex"
+      class="fb-dynamicgrid__row"
+    >
+      <td
+        *ngFor="let cell of row; index as cellIndex"
+        class="fb-dynamicgrid__cell"
+        id="td-{{ rowIndex }}-{{ cellIndex }}"
+      >
+        <input
+          type="text"
+          class="fb-dynamicgrid__input"
+          [placeholder]="rowIndex + ':' + cellIndex"
           name="{{ rowIndex }}-{{ cellIndex }}"
-          id="ch-{{ rowIndex }}-{{ cellIndex }}"
+          id="in-{{ rowIndex }}-{{ cellIndex }}"
           [attr.data-row]="rowIndex"
           [attr.data-cell]="cellIndex"
-          (change)="getRow($event)"
-        /> -->
-        <label>{{ rowIndex }} - {{ cellIndex }}</label>
+          (change)="getRow($event, rowIndex, cellIndex)"
+          (keyup)="getRow($event, rowIndex, cellIndex)"
+        />
       </td>
     </tr>
-  </tbody>
-</table>
-<!-- <div *ngFor="let row of gridData; index as rowIndex">
-  <div *ngFor="let cell of row; index as cellIndex">
-    <input
-      type="checkbox"
-      name="{{ rowIndex }}-{{ cellIndex }}"
-      id="ch-{{ rowIndex }}-{{ cellIndex }}"
-      [attr.data-row]="rowIndex"
-      [attr.data-cell]="cellIndex"
-      (change)="getRow($event)"
-    />
-    <label>{{ cell }} / {{ rowIndex }} - {{ cellIndex }}</label>
+  </table>
+  <div class="fb-dynamicgrid__actions">
+    <button
+      class="fb-dynamicgrid__btn"
+      (click)="mergeCells(true)"
+      [disabled]="isRowEnd"
+    >
+      R
+    </button>
+    <button
+      class="fb-dynamicgrid__btn"
+      (click)="mergeCells(false)"
+      [disabled]="isColEnd"
+    >
+      C
+    </button>
   </div>
-</div> -->
+</div>
