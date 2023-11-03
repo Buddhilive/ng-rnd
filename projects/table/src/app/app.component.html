@@ -1,4 +1,6 @@
-<div class="fb-dynamicgrid">
+<app-table></app-table>
+
+<!-- <div class="fb-dynamicgrid">
   <table class="fb-dynamicgrid__table" #fbDynamicGrid>
     <tr
       *ngFor="let row of gridData; index as rowIndex"
@@ -8,6 +10,8 @@
         *ngFor="let cell of row; index as cellIndex"
         class="fb-dynamicgrid__cell"
         id="td-{{ rowIndex }}-{{ cellIndex }}"
+        [attr.rowspan]="cell.rowspan"
+        [attr.colspan]="cell.colspan"
       >
         <input
           type="text"
@@ -39,4 +43,4 @@
       C
     </button>
   </div>
-</div>
+</div> -->

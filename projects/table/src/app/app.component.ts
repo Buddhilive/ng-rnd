@@ -8,7 +8,7 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 export class AppComponent {
   @ViewChild("fbDynamicGrid") fbDynamicGrid: ElementRef<HTMLTableElement>;
 
-  numCells = 3;
+  numCells = 6;
   numRows = 5;
   gridData: Array<any>;
 
@@ -20,8 +20,8 @@ export class AppComponent {
   isColEnd: boolean = true;
 
   ngOnInit() {
-    this.gridData = this.createDataGrid(this.numRows);
-    console.log(this.gridData);
+    /* this.gridData = this.createDataGrid(this.numRows);
+    console.log(this.gridData); */
   }
 
   getRow(evt: MouseEvent, row: number, cell: number) {
@@ -49,7 +49,7 @@ export class AppComponent {
       this.isColEnd = true;
     }
 
-    console.log(this.currentCellIndex, cellDiff);
+    console.log(rowDiff, cellDiff);
   }
 
   getCellDetails(evt: MouseEvent) {
@@ -61,20 +61,25 @@ export class AppComponent {
     const selectedCell: HTMLTableCellElement = this.fbDynamicGrid.nativeElement.rows[this.currentRowIndex].cells[this.currentCellIndex];
     if(isRow) {
       selectedCell.setAttribute('rowspan', this.cellInput.value);
+      //this.gridData[this.currentRowIndex][this.currentCellIndex].rowspan = parseInt(this.cellInput.value);
+      
       for (let i = this.currentRowIndex; i < (parseInt(this.cellInput.value) + this.currentRowIndex); i++) {
         if(i !== this.currentRowIndex) {
           this.fbDynamicGrid.nativeElement.rows[i].cells[this.currentCellIndex].remove();
+          // this.gridData[i].splice(this.currentCellIndex, parseInt(this.cellInput.value));
         }
       }
     } else {
       selectedCell.setAttribute('colspan', this.cellInput.value);
+      //this.gridData[this.currentRowIndex][this.currentCellIndex].colspan = parseInt(this.cellInput.value);
       for (let i = this.currentCellIndex; i < (parseInt(this.cellInput.value) + this.currentCellIndex); i++) {
         if(i !== this.currentCellIndex) {
           this.fbDynamicGrid.nativeElement.rows[this.currentRowIndex].cells[i].remove();
+          //this.gridData[this.currentRowIndex].splice(this.currentCellIndex + 1, parseInt(this.cellInput.value) - 1);
         }
       }
     }
-    console.log(selectedCell);
+    console.log(this.gridData);
   }
 
   private createDataGrid(rows: number) {
@@ -87,9 +92,17 @@ export class AppComponent {
 
   private createCells(cells: number) {
     const newArray = [];
+    
     for (let i = 0; i < cells; i++) {
-      newArray.push(0);
+      newArray.push(this.newCellData());
     }
     return newArray;
+  }
+
+  private newCellData() {
+    return {
+      colspan: 1,
+      rowspan: 1
+    };
   }
 }
