@@ -12,7 +12,54 @@ export class RedipsTableService {
   constructor() { }
 
   onMouseDown(el: any, flag: boolean, type: string) {
-    // Your implementation for the onMouseDown function
+      let td, th, i, t;
+  
+      const getTables = function (el: Document) {
+        let arr: HTMLTableElement[] = [];
+        const nodes = el.getElementsByTagName("table");
+  
+        for (let i = 0; i < nodes.length; i++) {
+          arr.push(nodes[i]);
+        }
+        return arr;
+      };
+  
+      this.tdEvent = flag;
+  
+      if (typeof el === "string") {
+        if (type === "classname") {
+          this.tables = getTables(document);
+          for (i = 0; i < this.tables.length; i++) {
+            if (this.tables[i].className.indexOf(el) === -1) {
+              this.tables.splice(i, 1);
+              i--;
+            }
+          }
+        } else {
+          el = document.getElementById(el);
+        }
+      }
+  
+      if (el && typeof el === "object") {
+        if (el.nodeName === "TABLE") {
+          this.tables[0] = el;
+        } else {
+          this.tables = getTables(el);
+        }
+      }
+  
+      for (t = 0; t < this.tables.length; t++) {
+        th = this.tables[t].getElementsByTagName("th");
+        for (i = 0; i < th.length; i++) {
+          this.cellInit(th[i]);
+        }
+        td = this.tables[t].getElementsByTagName("td");
+        for (i = 0; i < td.length; i++) {
+          this.cellInit(td[i]);
+        }
+      }
+  
+      this.cellIndex();
   }
 
   cellInit(c: any) {
