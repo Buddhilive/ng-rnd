@@ -32,8 +32,15 @@
     </button>
     <button
       class="fb-dynamicgrid__btn"
+      (click)="splitCells(true)"
     >
-      Split
+      Split Columns
+    </button>
+    <button
+      class="fb-dynamicgrid__btn"
+      (click)="splitCells(false)"
+    >
+      Split Rows
     </button>
   </div>
 </div>

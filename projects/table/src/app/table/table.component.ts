@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
     this.gridData = this.createDataGrid(this.numRows);
   }
 
-  selectedCell(evt: MouseEvent) {
+  selectedCell(evt: PointerEvent) {
     const tableRef = evt.target as HTMLTableCellElement;
     tableRef.classList.toggle('selected');
 
@@ -84,15 +84,13 @@ export class TableComponent implements OnInit {
       }
     } else {
       if(rowSpanArray.length > 1) {
-        this.fbDynamicGrid.nativeElement.rows[rowSpanArray[0]].cells[colSpanArray[0][0]].rowSpan = rowSpanArray.length;
+        this.fbDynamicGrid.nativeElement.rows[rowSpanArray[0]].cells[colSpanArray[0][rowSpanArray[0]][0]].rowSpan = rowSpanArray.length;
         for (let i = 1; i < rowSpanArray.length; i++) {
-          this.fbDynamicGrid.nativeElement.rows[rowSpanArray[i]].cells[colSpanArray[i][i][0]].remove();
+          this.fbDynamicGrid.nativeElement.rows[rowSpanArray[i]].cells[colSpanArray[i][rowSpanArray[i]][0]].remove();
         }
       }
     }
 
-    
-    console.log(this.selectedCells, rowSpanArray, colSpanArray);
     this.clearSelection();
   }
 
@@ -100,14 +98,51 @@ export class TableComponent implements OnInit {
     console.log(evt);
   }
 
-  private isInOrder(numArray: Array<number>) {
+  splitCells(isCol: boolean) {
+    if(isCol) {
+      this.selectedCells.map((cell: any) => {
+        const cellEl = this.fbDynamicGrid.nativeElement.rows[cell.row].cells[cell.cell];
+        if(cellEl.colSpan > 1) {
+          cellEl.colSpan = cellEl.colSpan - 1;
+          const td = this.fbDynamicGrid.nativeElement.rows[cell.row].insertCell(cell.cell + 1);
+          td.classList.add('fb-dynamicgrid__cell');
+          td.id = `td-${cell.row}-${cell.cell + 1}`;
+          td.innerHTML = `${cell.row}-${cell.cell + 1}`;
+          td.setAttribute('aria-rowindex', cell.row);
+          td.addEventListener('click', (evt: PointerEvent) => {
+            this.selectedCell(evt);
+          });
+        }
+        console.log(cellEl);
+      });
+    } else {
+      this.selectedCells.map((cell: any) => {
+        const rowEl = this.fbDynamicGrid.nativeElement.rows[cell.row].cells[cell.cell];
+        const rowIndex = (parseInt(cell.row) + rowEl.rowSpan) - 1;
+        if(rowEl.rowSpan > 1) {
+          rowEl.rowSpan = rowEl.rowSpan - 1;
+          const td = this.fbDynamicGrid.nativeElement.rows[rowIndex].insertCell(cell.cell);
+          td.classList.add('fb-dynamicgrid__cell');
+          td.id = `td-${rowIndex}-${cell.cell}`;
+          td.innerHTML = `${rowIndex}-${cell.cell}`;
+          td.setAttribute('aria-rowindex', (rowIndex).toString());
+          td.addEventListener('click', (evt: PointerEvent) => {
+            this.selectedCell(evt);
+          });
+        }
+      });
+    }
+    this.clearSelection();
+  }
+
+  /* private isInOrder(numArray: Array<number>) {
     for(let i = numArray[0]; i < (numArray.length + numArray[0]); i++) {
       if(numArray[i] !== (i + numArray[0])) {
         return false;
       }
     }
     return true;
-  }
+  } */
 
   private clearSelection() {
     this.fbDynamicGrid.nativeElement.querySelectorAll('.selected').forEach((el: HTMLTableCellElement) => {
