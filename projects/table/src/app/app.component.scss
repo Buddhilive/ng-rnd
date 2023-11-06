@@ -11,13 +11,14 @@
     border: 1px solid #6b7280;
     position: relative;
     padding: 8px;
-  }
-  &__input {
-    border: none;
-    outline: 0;
-    width: 100%;
-    height: 36px;
     text-align: center;
+    vertical-align: middle;
+    &.selected {
+      background-color: #e5e5e5;
+    }
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__actions {
     display: flex;

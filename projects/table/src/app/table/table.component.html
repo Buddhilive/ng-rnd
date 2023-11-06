@@ -8,12 +8,14 @@
         *ngFor="let cell of row; index as cellIndex"
         class="fb-dynamicgrid__cell"
         id="td-{{ rowIndex }}-{{ cellIndex }}"
+        [attr.aria-rowindex]="rowIndex"
+        (click)="selectedCell($event)"
       >
-
+      {{ rowIndex }}-{{ cellIndex }}
       </td>
     </tr>
   </table>
-  
+
   <div class="fb-dynamicgrid__actions">
     <button
       class="fb-dynamicgrid__btn"
