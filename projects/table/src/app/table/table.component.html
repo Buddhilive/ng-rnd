@@ -3,6 +3,7 @@
     <tr
       *ngFor="let row of gridData; index as rowIndex"
       class="fb-dynamicgrid__row"
+      (change)="rowUpdated($event)"
     >
       <td
         *ngFor="let cell of row; index as cellIndex"
@@ -19,13 +20,14 @@
   <div class="fb-dynamicgrid__actions">
     <button
       class="fb-dynamicgrid__btn"
+      (click)="mergeCells()"
     >
-      R
+      Merge
     </button>
     <button
       class="fb-dynamicgrid__btn"
     >
-      C
+      Split
     </button>
   </div>
 </div>
