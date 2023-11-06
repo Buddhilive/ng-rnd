@@ -20,9 +20,15 @@
   <div class="fb-dynamicgrid__actions">
     <button
       class="fb-dynamicgrid__btn"
-      (click)="mergeCells()"
+      (click)="mergeCells(true)"
     >
-      Merge
+      Merge Columns
+    </button>
+    <button
+      class="fb-dynamicgrid__btn"
+      (click)="mergeCells(false)"
+    >
+      Merge Rows
     </button>
     <button
       class="fb-dynamicgrid__btn"

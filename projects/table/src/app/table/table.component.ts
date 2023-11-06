@@ -45,7 +45,7 @@ export class TableComponent implements OnInit {
     console.info(this.selectedCells);
   }
 
-  mergeCells() {
+  mergeCells(isColSpan: boolean) {
     const colSpanArray: Array<any> = [];
     const rowSpanArray: Array<any> = [];
     
@@ -67,23 +67,31 @@ export class TableComponent implements OnInit {
       });
     }
 
-    for (let row in colSpanArray) {
-      const rowIndex = rowSpanArray[row];
-      const colSpan = colSpanArray[row][rowIndex];
-      let colSpanValue = 0;
-
-      for(let i in colSpan) {
-        const itemColSpan = this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[i]].colSpan;
-        colSpanValue += itemColSpan;
+    if(isColSpan) {
+      for (let row in colSpanArray) {
+        const rowIndex = rowSpanArray[row];
+        const colSpan = colSpanArray[row][rowIndex];
+        let colSpanValue = 0;
+  
+        for(let i in colSpan) {
+          const itemColSpan = this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[i]].colSpan;
+          colSpanValue += itemColSpan;
+        }
+        this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[0]].colSpan = colSpanValue;
+        for(let i = 1; i < colSpan.length; i++) {
+          this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[0] + 1].remove();
+        }
       }
-      this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[0]].colSpan = colSpanValue;
-      for(let i = 1; i < colSpan.length; i++) {
-        console.log(colSpan[i], this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[0] + 1]);
-        this.fbDynamicGrid.nativeElement.rows[rowIndex].cells[colSpan[0] + 1].remove();
+    } else {
+      if(rowSpanArray.length > 1) {
+        this.fbDynamicGrid.nativeElement.rows[rowSpanArray[0]].cells[colSpanArray[0][0]].rowSpan = rowSpanArray.length;
+        for (let i = 1; i < rowSpanArray.length; i++) {
+          this.fbDynamicGrid.nativeElement.rows[rowSpanArray[i]].cells[colSpanArray[i][i][0]].remove();
+        }
       }
-      console.log(colSpan[colSpan.length - 1]);
     }
-    this.selectedCells = [];
+
+    
     console.log(this.selectedCells, rowSpanArray, colSpanArray);
     this.clearSelection();
   }
@@ -105,6 +113,7 @@ export class TableComponent implements OnInit {
     this.fbDynamicGrid.nativeElement.querySelectorAll('.selected').forEach((el: HTMLTableCellElement) => {
       el.classList.remove('selected');
     });
+    this.selectedCells = [];
   }
 
   private createDataGrid(rows: number) {
