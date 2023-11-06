@@ -24,6 +24,10 @@ export class TableComponent implements OnInit {
     this.gridData = this.createDataGrid(this.numRows);
   }
 
+  reset() {
+    this.gridData = this.createDataGrid(this.numRows);
+  }
+
   selectedCell(evt: PointerEvent) {
     const tableRef = evt.target as HTMLTableCellElement;
     tableRef.classList.toggle('selected');
