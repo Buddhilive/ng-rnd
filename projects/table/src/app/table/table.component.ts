@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -9,14 +9,18 @@ export class TableComponent implements OnInit {
 
   @ViewChild("fbDynamicGrid") fbDynamicGrid: ElementRef<HTMLTableElement>;
 
-  numCells = 6;
-  numRows = 5;
+  @Input() numCells: number;
+  @Input() numRows: number;
   gridData: Array<any>;
   selectedCells: Array<any> = []
 
   constructor() { }
 
   ngOnInit() {
+    this.gridData = this.createDataGrid(this.numRows);
+  }
+
+  ngOnChanges() {
     this.gridData = this.createDataGrid(this.numRows);
   }
 

@@ -1,7 +1,7 @@
-<app-table></app-table>
+<app-table [numCells]="numCells" [numRows]="numRows"></app-table>
 
-<!-- <div class="fb-dynamicgrid">
-  <table class="fb-dynamicgrid__table" #fbDynamicGrid>
+<div class="fb-dynamicgrid">
+  <!-- <table class="fb-dynamicgrid__table" #fbDynamicGrid>
     <tr
       *ngFor="let row of gridData; index as rowIndex"
       class="fb-dynamicgrid__row"
@@ -26,21 +26,19 @@
         />
       </td>
     </tr>
-  </table>
+  </table> -->
   <div class="fb-dynamicgrid__actions">
     <button
       class="fb-dynamicgrid__btn"
-      (click)="mergeCells(true)"
-      [disabled]="isRowEnd"
+      (click)="addRows()"
     >
-      R
+      Rows +
     </button>
     <button
       class="fb-dynamicgrid__btn"
-      (click)="mergeCells(false)"
-      [disabled]="isColEnd"
+      (click)="addColumns()"
     >
-      C
+      Columns +
     </button>
   </div>
-</div> -->
+</div>

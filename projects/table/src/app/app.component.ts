@@ -25,6 +25,14 @@ export class AppComponent {
     console.log(this.gridData); */
   }
 
+  addRows() {
+    this.numRows += 1;
+  }
+
+  addColumns() {
+    this.numCells += 1;
+  }
+
   getRow(evt: MouseEvent, row: number, cell: number) {
     this.currentCellIndex = cell;
     this.currentRowIndex = row;
