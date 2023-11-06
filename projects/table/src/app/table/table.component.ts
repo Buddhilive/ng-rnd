@@ -42,7 +42,7 @@ export class TableComponent implements OnInit {
       return a.row - b.row;
     });
 
-    console.info(this.selectedCells);
+    // console.info(this.selectedCells);
   }
 
   mergeCells(isColSpan: boolean) {
@@ -94,26 +94,24 @@ export class TableComponent implements OnInit {
     this.clearSelection();
   }
 
-  rowUpdated(evt: Event) {
-    console.log(evt);
-  }
-
   splitCells(isCol: boolean) {
     if(isCol) {
       this.selectedCells.map((cell: any) => {
         const cellEl = this.fbDynamicGrid.nativeElement.rows[cell.row].cells[cell.cell];
+        const cellIndex = (parseInt(cell.cell) + cellEl.colSpan) - 1;
+        // console.log(parseInt(cell.cell), cellEl.colSpan);
         if(cellEl.colSpan > 1) {
           cellEl.colSpan = cellEl.colSpan - 1;
           const td = this.fbDynamicGrid.nativeElement.rows[cell.row].insertCell(cell.cell + 1);
           td.classList.add('fb-dynamicgrid__cell');
-          td.id = `td-${cell.row}-${cell.cell + 1}`;
-          td.innerHTML = `${cell.row}-${cell.cell + 1}`;
+          td.id = `td-${cell.row}-${cellIndex}`;
+          td.innerHTML = `${cell.row}-${cellIndex}`;
           td.setAttribute('aria-rowindex', cell.row);
           td.addEventListener('click', (evt: PointerEvent) => {
             this.selectedCell(evt);
           });
         }
-        console.log(cellEl);
+        
       });
     } else {
       this.selectedCells.map((cell: any) => {

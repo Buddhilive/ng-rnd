@@ -3,7 +3,6 @@
     <tr
       *ngFor="let row of gridData; index as rowIndex"
       class="fb-dynamicgrid__row"
-      (change)="rowUpdated($event)"
     >
       <td
         *ngFor="let cell of row; index as cellIndex"
