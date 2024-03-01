@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IndexdbService } from './indexdb.service';
 
 @Component({
   selector: 'app-indexdb',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexdbComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _indexDB: IndexdbService) { }
 
   ngOnInit() {
+    this._indexDB.init();
+
+    this._indexDB.dbObj.subscribe((db) => {
+      this._indexDB.addItem('hello');
+    });
   }
 
 }
