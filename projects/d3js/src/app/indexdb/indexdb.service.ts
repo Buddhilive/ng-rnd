@@ -19,8 +19,8 @@ export class IndexdbService {
       this.db = event.target.result;
       if (!this.db.objectStoreNames.contains(name)) {
         // Check if the store exists
-        const options = { keyPath: keypath }; // Set 'id' property as the key path
-        this.db.createObjectStore(name, options);
+        // const options = { keyPath: keypath }; // Set 'id' property as the key path
+        this.db.createObjectStore(name);
       }
     };
 
@@ -35,13 +35,45 @@ export class IndexdbService {
     };
   }
 
-  addItem(value: string) {
-    const item = {
-      name: value
-    };
+  addItem(value: string, key: string) {
+    const item = value;
     const tx = this.db.transaction("csv_data", "readwrite");
     const store = tx.objectStore("csv_data");
-    store.add(item);
+    store.add(item, key);
+  }
+
+  async getItem(key: string) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction(["csv_data"], "readonly");
+      const store = tx.objectStore("csv_data");
+  
+      store.get(key).onsuccess = (event: any) => {
+        const retrievedData = event.target.result;
+        console.log(retrievedData);
+        if (retrievedData) {
+          resolve(retrievedData);
+        } else {
+          reject(undefined);
+        }
+      };
+  
+      store.get(key).onerror = (event: any) => {
+        console.error("Error retrieving data:", event.target.error);
+        reject(event.target.error);
+      };
+    });
+  }
+
+  updateItem(value: string, key: string) {
+    const tx = this.db.transaction("csv_data", "readwrite");
+    const store = tx.objectStore("csv_data");
+    store.put(value, key);
+  }
+
+  deleteItem(key: string) {
+    const tx = this.db.transaction("csv_data", "readwrite");
+    const store = tx.objectStore("csv_data");
+    store.delete(key);
   }
 
   closeDB() {
